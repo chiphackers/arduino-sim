@@ -1,0 +1,4 @@
+build/
+.release_time
+.swap
+.o
