@@ -11,11 +11,11 @@ excerpt=Arduino allows to perform digital read 14 IO pins. This exercise is to l
 
 # Introduction #
 
-excerpt=Arduino allows to perform digital read 14 IO pins. This exercise is to learn how to perform digital read and write
+Arduino allows to perform digital read 14 IO pins. This exercise is to learn how to perform digital read and write
 
 ## Experiment Setup
 
-[arduino](https://cdn.arduino.cc/homepage/static/media/arduino-UNO.bcc69bde.png)
+<img src="https://cdn.arduino.cc/homepage/static/media/arduino-UNO.bcc69bde.png" alt=""/>
 
 An arduino borad is connected with pushbutton at input pin 7 and led connected to 13 pin
 
