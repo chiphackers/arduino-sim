@@ -6,14 +6,20 @@ author=udara
 checker=ard_simple
 difficulty=easy
 points=10
-excerpt=Write a simple LED blinking program for Arduino Platform
+excerpt=Write a simple pogram for reading from ADC port in  Arduino Platform
 points=10
 -->
 
-# Led Blink #
+# Introduction #
 
-This is a simple example for blinking an arduino
+Arduino allows to read an analog input voltage using the ADCs.
+
+## Experiment Setup
+
+<img src="https://www.arduino.cc/en/uploads/Tutorial/AnalogReadSerial_BB.png" alt=""/>
+
+An arduino borad is connected with pushbutton at input pin 7 and led connected to 13 pin
 
 ## Task ##
 
-Write a simple arduino code to blink the D0 led every second
+Read an analog input on pin 0, print the result to the Serial Monitor.
