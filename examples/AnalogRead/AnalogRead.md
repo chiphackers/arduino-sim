@@ -9,7 +9,6 @@ points=10
 excerpt=Write a simple pogram for reading from ADC port in  Arduino Platform
 points=10
 -->
-
 # Introduction #
 
 Arduino allows to read an analog input voltage using the ADCs.
