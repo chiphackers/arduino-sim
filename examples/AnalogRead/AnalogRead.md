@@ -1,10 +1,12 @@
-<--
+<!--
 name=AnalogRead
 major_type=arduino
 minor_type=beginner
 author=udara
 checker=ard_simple
 difficulty=easy
+points=10
+excerpt=Write a simple LED blinking program for Arduino Platform
 points=10
 -->
 
