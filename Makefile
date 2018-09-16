@@ -20,8 +20,8 @@ OBJECTS := $(foreach ext, $(SRCEXTS), $(patsubst %.$(ext), $(BUILDDIR)/%.o, $(fi
 # Compilers and flags
 CC := gcc
 CXX := g++
-override CFLAGS += -g -Wall -Wno-unused-variable
-override CXXFLAGS += -g -Wall -Wno-unused-variable
+override CFLAGS += -g
+override CXXFLAGS += -g
 override LDFLAGS += 
 INCFLAGS := $(INCDIRS:%=-I%)
 DEPFLAGS := -MMD -MP
@@ -40,7 +40,6 @@ define compilecc
 	@mkdir -p $(dir $1)
 	@$(CC) -c $2 -o $1 $(CFLAGS) $(INCFLAGS) -MT $1 -MF $(BUILDDIR)/$3.Td $(DEPFLAGS)
 	@mv -f $(BUILDDIR)/$3.Td $(BUILDDIR)/$3.d && touch $1
-	@echo CC: $1
 endef
 
 # Function to compile using $(CXX) : (files: .cpp .cc .cxx .c++ .C)
@@ -48,7 +47,6 @@ define compilecxx
 	@mkdir -p $(dir $1)
 	@$(CXX) -c $2 -o $1 $(CXXFLAGS) $(INCFLAGS) -MT $1 -MF $(BUILDDIR)/$3.Td $(DEPFLAGS)
 	@mv -f $(BUILDDIR)/$3.Td $(BUILDDIR)/$3.d && touch $1
-	@echo CXX: $1
 endef
 
 # Rules to build objects for each source file extension
@@ -105,10 +103,10 @@ include $(wildcard $(foreach ext, $(SRCEXTS), $(patsubst %.$(ext), $(BUILDDIR)/%
 $(EXCECUTABLE): $(OBJECTS) $(MAKEFILE) $@
 ifeq ($(filter-out %.c,$(SOURCES)),$(blank))
 	@$(CC) -o $@ $(OBJECTS) $(CFLAGS) $(LDFLAGS)
-	@echo CC: $@ (excecutable)
+#	@echo CC: $@ (excecutable)
 else
 	@$(CXX) -o $@ $(OBJECTS) $(CXXFLAGS) $(LDFLAGS)
-	@echo CXX: $@
+#	@echo CXX: $@
 endif
 
 # Launch excecutable, compile if necessary

@@ -5,6 +5,13 @@
 
 using namespace std;
 
+/**
+ * Declaring Global variables
+ * NOTE: This is not clean method. Need refactoring
+ */
+char* problemDir = NULL;
+char* testFile   = NULL;
+
 SerialClass Serial;
 typedef std::map<string, int> pinValueMap;
 
@@ -21,19 +28,23 @@ extern void delay(int a){
 
 extern int analogRead(pin b){
     pinValueMap dic;
-    ifstream infile("./sources/src/portvals.txt");
-    if (infile.is_open()) {
-    	int number;
-   	string str;
-    	char c;
-    	while (infile >> number >> c >> str && c == ','){
-        	//std::cout << number << " " << str << "\n";
-			
-		dic[str] = number;
-		cout << str  << " " << number << "\n";
-	}
+    if(problemDir != NULL){
+        string infileStr = string(problemDir) + "./sources/src/portvals.txt";
+        ifstream infile(infileStr);
+        if (infile.is_open()) {
+            int number;
+            string str;
+            char c;
+            while (infile >> number >> c >> str && c == ','){
+                //std::cout << number << " " << str << "\n";
+                
+                dic[str] = number;
+                cout << str  << " " << number << "\n";
+            }
+        }
+    }else{
+        cout << "Unable to open file";
     }
-    else cout << "Unable to open file";
     string pinName;
 	switch(b){
 	   case  A0: 
@@ -42,7 +53,7 @@ extern int analogRead(pin b){
 		pinName = "A1" ; break;
 	   case  B0: 
 		pinName = "B0" ; break;	
-		}
+    }
 	
   return dic[pinName];
 }
@@ -50,7 +61,14 @@ extern int analogRead(pin b){
 extern void setup();
 extern void loop();
 
-int main(){
+int main(int argc, char** argv){
+    if(argc != 3){
+        cout << "[ERROR  ]: Missing arguments to the simulator";
+    }else{
+        problemDir = argv[1];
+        testFile   = argv[0];
+    }
+
     setup();
     loop();
     cout << "hello world" << endl;

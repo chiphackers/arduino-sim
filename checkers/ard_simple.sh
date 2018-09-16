@@ -1,11 +1,5 @@
 #!/bin/bash
 
-######### System Check ##############
-if [ "`which iverilog`" == "" ]; then
-    echo "[ERROR  ]: iverilog not found can't simulate"
-    exit 1;
-fi
-
 ######### Input Check ###############
 if [ -z $1 ]; then
     echo "[ERROR  ]: Invalid location"
@@ -15,15 +9,32 @@ fi
 ######### Goto Answer ###############
 PROB_DIR=$1
 TEST_FILE=$2
+CURR_DIR="`pwd`"
+BUILD_DIR="$(dirname "$0")/../"
+
+######### Copy user code simulator ##
+if [ ! -f "$BUILD_DIR/sources/src/test.cpp" ]; then
+    echo "[INFO   ]: Cleaning old source"
+    rm ./sources/src/test.cpp
+fi
+
+cp $2 "$BUILD_DIR/sources/src/test.cpp"
+sed -i '1s;^;#include "Arduino.h"\n;' $BUILD_DIR/sources/src/test.cpp
+
+#####################################
+cd $BUILD_DIR # We just changed current directory. Make sure to come back
+#####################################
 
 ######### Sanity Work ###############
 if [ -f compile.log ]; then
     rm compile.log
 fi
-######### Compile check #############
-iverilog $TEST_FILE > compile.log 2>&1
 
-if [ "`cat compile.log`" != "" ]; then
+######### Compile check #############
+make clean
+make > compile.log 2>&1
+
+if [ "`cat compile.log`" != "Done." ]; then
     echo "[ERROR  ]: compilation failed"
     echo "----------[LOG]------------"
     cat compile.log | sed -e "s@`pwd`@@"
@@ -36,27 +47,20 @@ fi
 if [ -f compile.log ]; then
     rm compile.log
 fi
+
+#####################################
+cd $CURR_DIR # We came back
+#####################################
 
 ######### Start Testing #############
-# we need to verify whether TEST_FILE is compile errors free
-# because if not it will throw errors in testbench file
-iverilog $TEST_FILE $PROB_DIR/testbench.v > compile.log 2>&1
 
-if [ "`cat compile.log`" != "" ]; then
-    echo "[ERROR  ]: compilation failed"
-    echo "----------[LOG]------------"
-    cat compile.log | sed -e "s@`pwd`@@"
-    echo "----------[END]------------"
-    rm compile.log
-    exit 1
-fi
-
-sim_out=`vvp a.out`
+sim_out=`$BUILD_DIR/build/arduino-sim $PROB_DIR $TEST_FILE`
 
 if [ "$sim_out" != "`cat $PROB_DIR/SOLUTION`" ]; then
     echo "[ERROR  ]: Your design is not correct"
     exit 1
 else
+    echo "$sim_out"
     echo "[SUCCESS]: Your solution works"
     exit 0
 fi
