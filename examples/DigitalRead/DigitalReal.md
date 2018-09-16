@@ -1,16 +1,16 @@
 <--
-name=AnalogRead
+name=DigitalRead
 major_type=arduino
 minor_type=beginner
-author=udara
+author=viduneth
 checker=ard_simple
 difficulty=easy
 points=10
 -->
 
-# Led Blink #
+# Digital Read #
 
-This is a simple example for blinking an arduino
+This is a simple example for checking digital arduino
 
 ## Task ##
 
