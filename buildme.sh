@@ -1,12 +1,9 @@
 #!/bin/bash
 
 DIR=`dirname "${BASH_SOURCE[0]}"`
-if [ -d "$DIR/obj" ]; then
-    rm $DIR/obj -rf
-fi
 
 mkdir $DIR/obj
-cp $DIR/examples/* $DIR/obj/ -r
+cp $DIR/examples/* $DIR/obj/ -rf
 
 echo "created object folder"
 
