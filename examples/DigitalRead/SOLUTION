@@ -1,5 +1,7 @@
 Received begin serial 9600
-25
+Making the pin 13 OUTPUT
+Making the pin 7 INPUT
 Sleeping for 2 milliseconds
+Writing 0 to pin 13
 hello world
 

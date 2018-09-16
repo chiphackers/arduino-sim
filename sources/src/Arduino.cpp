@@ -35,11 +35,11 @@ void delay(int a){
 
 void pinMode(int pin, int val){
 	if ( (val == 0) ){
-		cout << "Making the pin " << pin  << " OUTPUT " <<endl;
+		cout << "Making the pin " << pin  << " OUTPUT" <<endl;
 			
 	}
 	else if ( (val == 1) ) {
-		cout << "Making the pin " << pin  << " INPUT " <<endl;
+		cout << "Making the pin " << pin  << " INPUT" <<endl;
 	}
 	else{
 		cout << "Wrong Type\n" << endl; 
