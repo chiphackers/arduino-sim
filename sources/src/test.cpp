@@ -20,5 +20,9 @@ void setup() {
 void loop() {
   int sensorValue = analogRead(A0);
   Serial.println(sensorValue);
+  Serial.println("adaf");
   delay(2);
+  int pVal = digitalRead(7);
+  digitalWrite(3,0);
+  Serial.println(pVal);
 }

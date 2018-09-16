@@ -12,8 +12,10 @@ using namespace std;
 char* problemDir = NULL;
 char* testFile   = NULL;
 
+aPinValueMap dic;
+dPinValueMap ddic;
+
 SerialClass Serial;
-typedef std::map<string, int> pinValueMap;
 
 int SerialClass::begin(int a){
     cout << "Received begin serial " << a << endl;
@@ -22,14 +24,59 @@ void SerialClass::println(int a){
     cout << a<< endl;
 }
 
-extern void delay(int a){
+void SerialClass::println(string a){
+    cout << a << endl;
+}
+
+void delay(int a){
    cout << "Sleeping for " << a <<" milliseconds\n"; 
 }
 
-extern int analogRead(pin b){
-    pinValueMap dic;
+
+void pinMode(int pin, int val){
+	if ( (val == 0) ){
+		cout << "Making the pin " << pin  << " OUTPUT " <<endl;
+			
+	}
+	else if ( (val == 1) ) {
+		cout << "Making the pin " << pin  << " INPUT " <<endl;
+	}
+	else{
+		cout << "Wrong Type\n" << endl; 
+	}	
+}
+
+
+int digitalRead(int dPinNo){
     if(problemDir != NULL){
-        string infileStr = string(problemDir) + "./sources/src/portvals.txt";
+        string infileStr = string(problemDir) + string("/dportvals.txt");
+        ifstream infile(infileStr.c_str());
+        if (infile.is_open()) {
+            int portNumber;
+            int portValue;
+            char c;
+            while (infile >> portNumber >> c >> portValue && c == ','){
+                ddic[portNumber] = portValue;
+            }
+        }
+    }else{
+	cout << "Unable to open digital port values file";
+	}
+    return ddic[dPinNo];
+} 
+
+void digitalWrite(int pin, int val){
+	if ( (val == 0) || (val == 1) ) {
+		cout << "Writing " << val << " to pin " << pin << endl;
+	}
+	else{
+		cout << "Wrong value\n" << val << endl; 
+	}	
+}
+
+int analogRead(pin b){
+    if(problemDir != NULL){
+        string infileStr = string(problemDir) + string("/aportvals.txt");
         ifstream infile(infileStr.c_str());
         if (infile.is_open()) {
             int number;
@@ -39,7 +86,7 @@ extern int analogRead(pin b){
                 //std::cout << number << " " << str << "\n";
                 
                 dic[str] = number;
-                cout << str  << " " << number << "\n";
+                //cout << str  << " " << number << "\n";
             }
         }
     }else{
@@ -66,7 +113,7 @@ int main(int argc, char** argv){
         cout << "[ERROR  ]: Missing arguments to the simulator";
     }else{
         problemDir = argv[1];
-        testFile   = argv[0];
+        testFile   = argv[2];
     }
 
     setup();

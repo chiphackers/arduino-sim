@@ -9,7 +9,8 @@
 
   http://www.arduino.cc/en/Tutorial/AnalogReadSerial
 */
-
+int inPin = 7;     // pushbutton connected to digital pin 7i
+int val = 0; 
 // the setup routine runs once when you press reset:
 void setup() {
   // initialize serial communication at 9600 bits per second:
@@ -17,8 +18,7 @@ void setup() {
 }
 
 void loop() {
-  int sensorValue = analogRead(A0);
-  Serial.println(sensorValue);
+  val = digitalRead(inPin);     // read the input pin
   delay(2);
-  digialRead(7);
+  digitalWrite(ledPin, val);    // sets the LED to the button's value
 }

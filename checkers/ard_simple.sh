@@ -33,7 +33,7 @@ fi
 ######### Compile check #############
 make clean
 make > compile.log 2>&1
-
+#cat compile.log
 if [ "`cat compile.log`" != "Done." ]; then
     echo "[ERROR  ]: compilation failed"
     echo "----------[LOG]------------"
@@ -53,12 +53,15 @@ cd $CURR_DIR # We came back
 #####################################
 
 ######### Start Testing #############
-
+pwd
+#echo $BUILD_DIR
+#echo "this is prob $PROB_DIR"
 sim_out=`$BUILD_DIR/build/arduino-sim $PROB_DIR $TEST_FILE`
 
 if [ "$sim_out" != "`cat $PROB_DIR/SOLUTION`" ]; then
     echo "[ERROR  ]: Your design is not correct"
-    exit 1
+    echo $sim_out
+	exit 1
 else
     echo "$sim_out"
     echo "[SUCCESS]: Your solution works"

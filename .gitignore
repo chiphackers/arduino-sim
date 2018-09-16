@@ -1,4 +1,5 @@
 build/
 .release_time
-.swap
+.swp
 .o
+obj/
