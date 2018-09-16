@@ -1,4 +1,4 @@
-<--
+<!--
 name=DigitalRead
 major_type=arduino
 minor_type=beginner
