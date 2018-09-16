@@ -30,7 +30,7 @@ extern int analogRead(pin b){
     pinValueMap dic;
     if(problemDir != NULL){
         string infileStr = string(problemDir) + "./sources/src/portvals.txt";
-        ifstream infile(infileStr);
+        ifstream infile(infileStr.c_str());
         if (infile.is_open()) {
             int number;
             string str;
